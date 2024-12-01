@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "TdM03o6qh62cFTC2Nx2pnpn3nZx4lsRYNP3bILgt+pE=",
+  "Source": "kuaforberberApp.Server",
+  "BasePath": "_content/kuaforberberApp.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\tarik\\source\\repos\\kuaforberberApp\\kuaforberberapp.client\\kuaforberberapp.client.esproj",
+      "Version": 2,
+      "Source": "kuaforberberapp.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

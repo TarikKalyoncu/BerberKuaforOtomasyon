@@ -1,0 +1,6 @@
+@kuaforberberApp.Server_HostAddress = http://localhost:5198
+
+GET {{kuaforberberApp.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
