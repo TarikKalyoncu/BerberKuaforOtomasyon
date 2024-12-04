@@ -10,6 +10,8 @@ namespace KuaforBerberOtomasyon.Models
         public decimal Price { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
+        public ServiceGender Gender { get; set; }
+
         // Yabancı anahtarlar
 
         public ICollection<EmployeeService> EmployeeServices { get; set; } // Hizmetin çalışanları
