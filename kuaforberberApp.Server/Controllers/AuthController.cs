@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using kuaforberberApp.Server.Models.DTO;
 using kuaforberberApp.Server.Interface;
+using Microsoft.AspNetCore.Identity;
 
 public class AuthController : ControllerBase
 {
@@ -48,21 +49,23 @@ public class AuthController : ControllerBase
         {
             FullName = request.FullName?.Trim() ?? "Default Name",
             Email = request.Email?.Trim(),
-            PasswordHash = _userRepository.HashPassword(request.Password?.Trim())
+           
         };
 
 
 
         // Special admin user logic
-        if (request.Email.Equals("OgrenciNuramarasi@sakarya.edu.tr", StringComparison.OrdinalIgnoreCase))
+        if (request.Email.Equals("tarik.kalyoncu1@ogr.sakarya.edu.tr", StringComparison.OrdinalIgnoreCase))
         {
             _logger.LogInformation("Special admin user detected: {Email}", request.Email);
             user.Role = UserRole.Admin; // Assign enum value
+            user.PasswordHash = _userRepository.HashPassword("sau");
         }
         else
         {
             _logger.LogInformation("Normal user detected: {Email}", request.Email);
             user.Role = UserRole.Customer; // Assign enum value
+            user.PasswordHash = _userRepository.HashPassword(request.Password?.Trim());
         }
 
         // Save user to database
@@ -90,5 +93,58 @@ public class AuthController : ControllerBase
             return BadRequest("Error creating user.");
         }
     }
+
+
+
+
+    [HttpPost("auth/login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
+    {
+        _logger.LogInformation("Login method started.");
+
+        // Check if user exists
+        var user = await _userRepository.GetUserByEmailAsync(request.Email?.Trim());
+        if (user == null)
+        {
+            _logger.LogWarning("User not found with email: {Email}", request.Email);
+            return Unauthorized("Invalid email or password.");
+        }
+
+        // Validate password
+        if (!_userRepository.VerifyPassword(request.Password?.Trim(), user.PasswordHash))
+        {
+            _logger.LogWarning("Invalid password for email: {Email}", request.Email);
+            return Unauthorized("Invalid email or password.");
+        }
+
+        // Generate JWT token using user data
+        var token = _userRepository.GenerateJwtToken(
+            userId: user.UserID.ToString(),
+            userName: user.FullName,
+            email: user.Email,
+            role: user.Role.ToString() // Enum to string conversion for role
+        );
+
+        // Create response
+        var response = new LoginResponseDto
+        {
+            Token = token
+        };
+
+        _logger.LogInformation("Login successful for email: {Email}", request.Email);
+        return Ok(response);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

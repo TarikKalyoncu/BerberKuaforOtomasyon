@@ -10,6 +10,10 @@ namespace kuaforberberApp.Server.Interface
 
         Task<bool> SaveUserAsync(User user); // Add this
         string HashPassword(string password);
+
+        bool VerifyPassword(string hashedPassword, string providedPassword);
+
+        string GenerateJwtToken(string userId, string userName, string email, string role);
     }
 
 }
