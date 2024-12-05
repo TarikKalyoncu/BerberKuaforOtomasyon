@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, of, switchMap, take, tap, throwError } from 'rxjs';
 import { User } from '../models/user.model';
-
 import { jwtDecode } from "jwt-decode";
-
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Router } from '@angular/router';
 import { NewUser } from '../models/newUser.model';
-import { HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../env/environment.prod';
-import { UserResponse } from './userResponse.model';
+import { Role } from '../enums/role.enum';
+import { RegisterResponseDTO } from '../models/registerResponseDTO ';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +22,6 @@ export class UserService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-
   get isUserLoggedIn(): Observable<boolean> {
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
@@ -36,7 +31,6 @@ export class UserService {
     );
   }
 
-
   get userId(): Observable<User> {
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
@@ -44,14 +38,14 @@ export class UserService {
       })
     );
   }
+
   get userFullName(): Observable<string> {
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
-        if (user && user.firstName && user.lastName) {
-          const fullName = user.firstName + ' ' + user.lastName;
-          return of(fullName);
+        if (user && user.fullName) {
+          return of(user.fullName);  // Use userName instead of firstName and lastName
         } else {
-          return of(''); // Kullanıcı verisi veya ad/soyad yoksa boş döndürüyoruz
+          return of(''); // Return empty if no userName
         }
       })
     );
@@ -61,26 +55,9 @@ export class UserService {
     return this.user$.asObservable().pipe(
       switchMap((user: User) => {
         if (user) {
-          const fullName = user.firstName + ' ' + user.lastName;
-          return of(fullName);
+          return of(user.fullName); // Use userName here as well
         }
-        return of(''); // Kullanıcı verisi yoksa boş döndürüyoruz
-      })
-    );
-  }
-
-
-
-  get userFullImagePath(): Observable<string> {
-    return this.user$.asObservable().pipe(
-      switchMap((user: User) => {
-        const doesAuthorHaveImage = !!user?.imagePath;
-        console.log(888, doesAuthorHaveImage, user);
-        let fullImagePath = this.getDefaultFullImagePath();
-        if (doesAuthorHaveImage) {
-          fullImagePath = this.getFullImagePath(user.imagePath);
-        }
-        return of(fullImagePath);
+        return of(''); // Return empty if no user
       })
     );
   }
@@ -90,6 +67,7 @@ export class UserService {
   getCurrentUserObservable(): Observable<User | null> {
     return this.user$.asObservable();
   }
+
   getDefaultFullImagePath(): string {
     return 'http://localhost:3000/api/feed/image/blank-profile-picture.png';
   }
@@ -97,8 +75,6 @@ export class UserService {
   getFullImagePath(id: string): string {
     return 'http://localhost:3000/user/' + id;
   }
-
-
 
   get userStream(): Observable<User> {
     return this.user$.asObservable();
@@ -110,48 +86,38 @@ export class UserService {
       .pipe(take(1));
   }
 
-  updateUserImagePath(imagePath: string): Observable<User> {
-    return this.user$.pipe(
-      take(1),
-      map((user: User) => {
-        user.imagePath = imagePath;
-        this.user$.next(user);
-        return user;
-      })
-    );
-  }
 
-  uploadUserImage(
-    formData: FormData
-  ): Observable<{ modifiedFileName: string }> {
+
+ 
+
+  uploadBlogImage(formData: FormData): Observable<{ modifiedFileName: string }> {
     return this.http
-      .post<{ modifiedFileName: string }>(
-        `${environment.baseApiUrl}/blog/upload`,
-        formData
-      )
-      .pipe(
-        tap(({ modifiedFileName }) => {
-          let user = this.user$.value;
-          user.imagePath = modifiedFileName;
-          this.user$.next(user);
-        })
-      );
-  }
-  uploadBlogImage(
-    formData: FormData
-  ): Observable<{ modifiedFileName: string }> {
-    return this.http
-      .post<{ modifiedFileName: string }>(
-        `${environment.baseApiUrl}/blog/image`,
-        formData
-      )
+      .post<{ modifiedFileName: string }>(`${environment.baseApiUrl}/blog/image`, formData)
   }
 
   get isAdmin(): Observable<boolean> {
     return this.user$.asObservable().pipe(
-      switchMap((user: User) => {
-        const isAdminUser = user && user.id === 11;
-        return of(isAdminUser);
+      switchMap(() => {
+        try {
+          const token = localStorage.getItem('token');
+          if (token) {
+            // Decode the token based on the updated structure
+            const decodedToken: any = jwtDecode(token);
+
+            // Check the role in the decoded token
+            const userRole = decodedToken?.role;
+            console.log("USER ROLE:", userRole);
+
+            // Return true if the role is Admin, otherwise false
+            return of(userRole === 'Admin');
+          }
+
+          // Return false if no token is found
+          return of(false);
+        } catch (error) {
+          console.error('Token decode error:', error);
+          return of(false);
+        }
       })
     );
   }
@@ -159,78 +125,121 @@ export class UserService {
 
   isTokenInStorage(): Observable<boolean> {
     const token = localStorage.getItem('token');
+    console.log(token,12431);
     if (!token) {
       return of(false);
     }
 
-    const decodedToken: UserResponse = jwtDecode(token);
-    const jwtExpirationInMsSinceUnixEpoch = decodedToken.exp * 1000;
-    const isExpired = new Date() > new Date(jwtExpirationInMsSinceUnixEpoch);
+    try {
+      const decodedToken: any = jwtDecode(token);
+      console.log(decodedToken, 912431);
+      if (!decodedToken?.exp) {
+        return of(false);
+      }
 
-    if (isExpired) {
+      const jwtExpirationInMsSinceUnixEpoch = decodedToken.exp * 1000;
+      const isExpired = new Date() > new Date(jwtExpirationInMsSinceUnixEpoch);
+
+      if (isExpired) {
+        return of(false);
+      }
+
+      const user: User = {
+          id: Number(decodedToken.id), 
+          fullName: decodedToken.fullName,
+          email: decodedToken.email,
+          role: decodedToken.role,
+          password: ''
+      };
+      console.log(user, 111312431);
+      this.user$.next(user);
+
+      return of(true);
+    } catch (error) {
+
       return of(false);
     }
-
-    if (decodedToken.user) {
-      this.user$.next(decodedToken.user);
-      return of(true);
-    }
-
-    return of(false);
   }
 
 
   getUserProfile(userId: number): Observable<any> {
     const url = `${environment.baseApiUrl}/blog/profile/${userId}`;
     return this.http.get<any>(url);
-
   }
 
   getDefaultProfileImage(): string {
-
     return '../../../../assets/default-profile-image.jpg';
   }
 
-
-
   login(email: string, password: string): Observable<{ token: string }> {
     return this.http
-      .post<{ token: string }>(
-        `${environment.baseApiUrl}/auth/login`,
-        { email, password },
-        this.httpOptions
-      )
+      .post<{ token: string }>(`${environment.baseApiUrl}/auth/login`, { email, password }, this.httpOptions)
       .pipe(
         take(1),
         tap((response: { token: string }) => {
           localStorage.setItem('token', response.token);
-          const decodedToken: UserResponse = jwtDecode(response.token);
-          this.user$.next(decodedToken.user);
-          console.log(decodedToken.user.lastName)
-          this.toastr.success(`Hoş geldiniz, ${decodedToken.user.firstName}!`, 'Başarılı');
+          console.log(response.token);
+
+          // Decode the JWT token
+          const decodedToken: any = jwtDecode(response.token);  // We can cast it to `any` to avoid type issues
+          console.log(decodedToken,999)
+
+          // Log the decoded token
+          console.log('Decoded Token:', JSON.stringify(decodedToken, null, 2));
+
+          // Map the decoded token to the User interface
+          const user: User = {
+              id: Number(decodedToken.id), // Ensure id is a number
+              fullName: decodedToken.fullName,
+              email: decodedToken.email,
+              role: decodedToken.role, // Ensure role is a string, could also be an enum if needed,
+              password: ''
+          };
+
+          // Update the user behavior subject
+          this.user$.next(user);
+          console.log(user.fullName);
+
+          // Navigate based on role
+          if (user.role === 'Admin') {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/home']);
+          }
+
+          // Show success toast
+          this.toastr.success(`Hoş geldiniz, ${user.fullName}!`, 'Başarılı');
+        }),
+        catchError((error) => {
+          this.toastr.error('Giriş işlemi sırasında bir hata oluştu.', 'Hata');
+          return throwError(error);
         })
       );
   }
 
 
 
-  register(newUser: NewUser): Observable<User> {
+  register(newUser: { email: string; password: string; fullName: string }): Observable<RegisterResponseDTO> {
+    const isAdmin = newUser.email.toLowerCase() === 'OgrenciNuramarasi@sakarya.edu.tr'.toLowerCase();
+
+    // Eğer admin ise sabit şifre kullan
+    const password = isAdmin ? 'sau' : newUser.password;
+
+    // API'ye istek gönder
     return this.http
-      .post<User>(
-        `${environment.baseApiUrl}/auth/register`,
-        newUser,
-        this.httpOptions
-      )
+      .post<RegisterResponseDTO>(`${environment.baseApiUrl}/auth/register`, {
+        email: newUser.email,
+        password,
+        fullName: newUser.fullName // FullName'i backend'e gönderiyoruz
+      }, this.httpOptions)
       .pipe(
-        switchMap((user: User) => {
+        switchMap((response: RegisterResponseDTO) => {
+          const loginPassword = isAdmin ? password : newUser.password;
 
-          return this.login(newUser.email, newUser.password).pipe(
-            map(() => user)
-          );
+          // Kayıt sonrası otomatik giriş
+          return this.login(newUser.email, loginPassword).pipe(map(() => response));
         }),
-        tap(() => {
-
-        }),
+        tap(() => this.toastr.success('Kayıt işlemi başarılı.', 'Başarılı')),
         catchError((error) => {
           this.toastr.error('Kayıt işlemi sırasında bir hata oluştu.', 'Hata');
           return throwError(error);
@@ -238,27 +247,11 @@ export class UserService {
       );
   }
 
-  logout(): void {
 
+
+  logout(): void {
     this.user$.next(null!);
     localStorage.removeItem('token');
-    this.router.navigateByUrl('/auth');
+    this.router.navigateByUrl('/');
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
-

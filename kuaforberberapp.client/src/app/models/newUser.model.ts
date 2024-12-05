@@ -1,7 +1,5 @@
 export interface NewUser {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   password: string;
-  imagePath: string;
 }

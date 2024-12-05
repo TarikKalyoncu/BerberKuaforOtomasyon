@@ -8,6 +8,9 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist\kuaforberberapp.client\browser\</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\app\pages\randevuGoruntule\" />
+    <Folder Include="src\app\pages\randevuAl\" />
+    <Folder Include="src\app\partial\sidebar\" />
     <Folder Include="src\ui\" />
   </ItemGroup>
 </Project>

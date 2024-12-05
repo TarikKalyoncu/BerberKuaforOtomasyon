@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
   <div class="container d-flex justify-content-between">
     <a [routerLink]="['']">
-      <img src="../../../../assets/LOG1.png" [routerLink]="['']" alt="" height="45px" width="200px">
+      <img src="" [routerLink]="['']" alt="" height="45px" width="200px">
     </a>
 
     <button class="navbar-toggler"
@@ -35,24 +35,25 @@
 
         <li class="nav-item" *ngIf="isLoggedIn" style="display: flex">
           <a [routerLink]="getUserProfileLink()">
-            <img [src]="userPhoto" alt="User Photo" style="object-fit: cover" />
+            <img src="userPhoto" alt="User Photo" style="object-fit: cover" />
           </a>
 
           <a class="nav-link" [routerLink]="getUserProfileLink()">Profil</a>
         </li>
 
         <li class="nav-item active" *ngIf="isLoggedIn && isAdmin">
-          <a class="nav-link" [routerLink]="['/blog','admin','panel']">Panel</a>
+          <a class="nav-link" [routerLink]="['/admin','panel']">Panel</a>
         </li>
-        <li class="nav-item active" *ngIf="isLoggedIn">
-          <a class="nav-link" [routerLink]="['/blog', 'create','post']">Yazı Yaz</a>
+        <li class="nav-item active" >
+          <a class="nav-link" [routerLink]="['/randevu', 'al']">Randevu Al</a>
         </li>
-        <li class="nav-item active">
-          <a class="nav-link" [routerLink]="['/blog','contact', 'send-email']">İletişim</a>
+        <li class="nav-item active" >
+          <a class="nav-link" [routerLink]="['/randevu', 'goruntule']">Randevu Görüntüle</a>
         </li>
 
+
         <li class="nav-item" *ngIf="isLoggedIn">
-          <a class="nav-link" [routerLink]="['/blog']" (click)="logout()">Çıkış</a>
+          <a class="nav-link" [routerLink]="['/']" (click)="logout()">Çıkış</a>
         </li>
         <li class="nav-item" *ngIf="!isLoggedIn">
           <a class="nav-link" [routerLink]="['/auth', 'login']">Giriş</a>

@@ -9,7 +9,14 @@ import { HeaderComponent } from './partial/header/header';
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-
+import {  RandevuAlComponent } from './pages/randevuAl/randevuAl';
+import { HomeComponent } from './pages/home/home';
+import { RandevuGoruntuleComponent } from './pages/randevuGoruntule/randevuGoruntule';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -17,6 +24,9 @@ import { ToastrModule } from 'ngx-toastr';
     HeaderComponent,
     LoginPageComponent,
     RegisterPageComponent,
+   RandevuAlComponent,
+    RandevuGoruntuleComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -26,9 +36,14 @@ import { ToastrModule } from 'ngx-toastr';
       newestOnTop: false,
     }),
     HttpClientModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     AppRoutingModule,
     FormsModule, 
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

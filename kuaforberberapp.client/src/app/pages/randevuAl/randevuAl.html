@@ -1,0 +1,35 @@
+<div class="container">
+  <h3>Select Gender</h3>
+  <button (click)="selectGender('Male')">Male</button>
+  <button (click)="selectGender('Female')">Female</button>
+
+  <div *ngIf="services$ | async as services">
+    <h3>Select Service</h3>
+    <button *ngFor="let service of services" (click)="selectService(service.id)">
+      {{ service.name }}
+    </button>
+  </div>
+
+  <div *ngIf="serviceSubject.getValue() as service">
+    <h3>Select Date</h3>
+    <input type="date" (change)="selectDate($event)" />
+
+  </div>
+
+  <div *ngIf="employees$ | async as employees">
+    <h3>Available Employees</h3>
+    <ul>
+      <li *ngFor="let employee of employees">
+        <button (click)="selectEmployee(employee.id)">
+          {{ employee.name }} - {{ employee.position }}
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="employeeSubject.getValue() as employee">
+    <h3>Selected Employee Price</h3>
+    <p *ngIf="selectedEmployeePrice$ | async as price">Price: {{ price | currency }}</p>
+    <button (click)="createAppointment()">Create Appointment</button>
+  </div>
+</div>

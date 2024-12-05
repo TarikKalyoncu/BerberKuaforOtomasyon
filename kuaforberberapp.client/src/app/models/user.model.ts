@@ -1,9 +1,9 @@
+import { Role } from "../enums/role.enum";
 
 export interface User {
   id: number;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   email: string;
   password: string;
-  imagePath: string;
+  role?: Role;  // Kullanıcının rolü
 }

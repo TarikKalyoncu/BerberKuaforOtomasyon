@@ -20,34 +20,34 @@ import { UserResponse } from '../../services/userResponse.model';
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean = false; // Başlangıçta kullanıcı giriş yapmamış olarak kabul edelim
   userPhoto: { [key: number]: string } = {};
-  userId!: number;
+  userId!: number | undefined;
   searchTerm: string = '';
   searchResults: any[] = [];
   isAdmin: boolean | undefined;
+  
   constructor(private userService: UserService, private http: HttpClient, private dialog: MatDialog, private router: Router) {
     this.userService.isAdmin.subscribe(isAdmin => this.isAdmin = isAdmin);
   }
 
   ngOnInit() {
-    this.getUserIdFromToken()
+    this.userId = this.getUserIdFromToken();
     this.userService.isTokenInStorage().subscribe((isLoggedIn: boolean) => {
       this.isLoggedIn = isLoggedIn;
 
     });
 
 
-    this.getUserPhoto(this.userId).subscribe((photo) => {
+   /*this.getUserPhoto(this.userId).subscribe((photo) => {
       this.userPhoto = photo
       console.log(7, this.userPhoto)
-    });
+    });*/ 
 
   }
 
 
   getUserProfileLink(): string {
-    const userId = this.getUserIdFromToken();
-    if (userId !== undefined) {
-      return '/blog/profile/' + userId;
+    if (this.userId !== undefined) {
+      return '/blog/profile/' + this.userId;
     }
     // If the user ID is undefined, redirect to the home page.
     return '/blog';
@@ -59,27 +59,19 @@ export class HeaderComponent implements OnInit {
       return undefined;
     }
 
+    // Decode the token
     const decodedToken: UserResponse = jwtDecode(token);
-    if (decodedToken.user) {
-      this.userId = decodedToken.user.id
-      return decodedToken.user.id;
 
+    // Return the user ID directly from the decoded token
+    if (decodedToken.id) {
+      this.userId = decodedToken.id;
+      return decodedToken.id;
     }
 
     return undefined;
   }
 
-  getUserPhoto(userId: number): Observable<string> {
-    const url = `http://localhost:3000/blog/selamlar/${userId}`;
 
-    return this.http.get(url, { responseType: 'blob' }).pipe(
-
-      map((response: Blob) => URL.createObjectURL(response))
-
-
-    );
-
-  }
 
   search(): void {
     if (this.searchTerm.trim() === '') {
