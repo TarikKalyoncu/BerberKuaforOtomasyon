@@ -1,0 +1,87 @@
+<div class="container">
+
+
+  <h2>Yeni Çalışan Ekle</h2>
+
+  <!-- Yeni Çalışan Ekle -->
+  <div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Ad Soyad</mat-label>
+      <input matInput [(ngModel)]="newEmployee.name" placeholder="Ad Soyad" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Başlangıç Saati</mat-label>
+      <mat-select [(ngModel)]="newEmployee.startTime">
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+          {{ hour }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Bitiş Saati</mat-label>
+      <mat-select [(ngModel)]="newEmployee.endTime">
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+          {{ hour }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="addEmployee()">
+      <mat-icon>add</mat-icon> Ekle
+    </button>
+  </div>
+
+  <!-- Çalışanlar Listesi -->
+  <h3 style="padding-top:20px;">
+    <mat-icon>list</mat-icon> Çalışan Listesi
+  </h3>
+  <mat-list>
+    <mat-list-item *ngFor="let employee of employees">
+      <span matLine>
+        <mat-icon>person</mat-icon> {{ employee.name }}
+      </span>
+      <button mat-icon-button color="primary" (click)="editEmployee(employee)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteEmployee(employee.employeeID!)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+
+  <!-- Çalışan Güncelle -->
+  <div *ngIf="editMode">
+    <h3>
+      <mat-icon>edit</mat-icon> Çalışan Güncelle
+    </h3>
+    <mat-form-field appearance="fill">
+      <mat-label>Ad Soyad</mat-label>
+      <input matInput [(ngModel)]="selectedEmployee!.name" placeholder="Ad Soyad" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Başlangıç Saati</mat-label>
+      <mat-select [(ngModel)]="selectedEmployee!.startTime">
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+          {{ hour }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Bitiş Saati</mat-label>
+      <mat-select [(ngModel)]="selectedEmployee!.endTime">
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+          {{ hour }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" (click)="updateEmployee()">
+      <mat-icon>update</mat-icon> Güncelle
+    </button>
+  </div>
+</div>

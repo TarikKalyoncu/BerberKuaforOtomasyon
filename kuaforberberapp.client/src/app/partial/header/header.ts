@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean | undefined;
   
   constructor(private userService: UserService, private http: HttpClient, private dialog: MatDialog, private router: Router) {
-    this.userService.isAdmin.subscribe(isAdmin => this.isAdmin = isAdmin);
+   
   }
 
   ngOnInit() {
@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
       this.isLoggedIn = isLoggedIn;
 
     });
-
+     this.userService.isAdmin.subscribe(isAdmin => this.isAdmin = isAdmin);
 
    /*this.getUserPhoto(this.userId).subscribe((photo) => {
       this.userPhoto = photo
