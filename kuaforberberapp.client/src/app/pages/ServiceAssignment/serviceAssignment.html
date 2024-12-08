@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Assign Service</h1>
+<mat-dialog-content>
+  <div class="assign-container">
+    <!-- Employees List -->
+    <div class="list">
+      <h3>Employees</h3>
+      <mat-list>
+        <mat-list-item *ngFor="let employee of data.employees"
+                       [class.selected]="employee === selectedEmployee"
+                       (click)="selectedEmployee = employee">
+          {{ employee.name }}
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <!-- Services List -->
+    <div class="list">
+      <h3>Services</h3>
+      <mat-list>
+        <mat-list-item *ngFor="let service of data.services"
+                       [class.selected]="service === selectedService"
+                       (click)="selectedService = service">
+          {{ service.name }}
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button color="primary" (click)="assignService()">Assign</button>
+</mat-dialog-actions>

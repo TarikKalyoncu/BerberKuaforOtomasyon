@@ -16,8 +16,8 @@ export class AdminPanelComponent implements OnInit {
   }
   buttons = [
     { label: 'Çalışan İşlemleri', action: 'employee-management', icon: 'group' },
-    { label: 'Hizmet İşlemleri', action: 'product-management', icon: 'shopping_bag' },
-    { label: 'Tüm Randevular', action: 'orders', icon: 'event' },
+    { label: 'Hizmet İşlemleri', action: 'service-management', icon: 'shopping_bag' },
+    { label: 'Tüm Hizmetler', action: 'employee-services', icon: 'event' },
     { label: 'Randevu Düzenle', action: 'reports', icon: 'edit_calendar' },
     { label: 'Ayarlar', action: 'settings', icon: 'settings' },
     { label: 'Çıkış', action: 'logout', icon: 'logout' },

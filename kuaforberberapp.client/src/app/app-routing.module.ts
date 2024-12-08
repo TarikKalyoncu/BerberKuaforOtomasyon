@@ -10,6 +10,8 @@ import { RandevuGoruntuleComponent } from './pages/randevuGoruntule/randevuGorun
 import { HomeComponent } from './pages/home/home';
 import { AdminPanelComponent } from './pages/adminPanel/adminPanel';
 import { EmployeeManagementComponent } from './pages/employeeManagement/employeeManagement';
+import { ServiceManagementComponent } from './pages/ServiceManagement/ServiceManagement';
+import { EmployeeServiceComponent } from './pages/EmployeeService/EmployeeService';
 
 
 const routes: Routes = [
@@ -21,7 +23,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' }, // Varsayılan yönlendirme
   { path: 'admin/panel', component: AdminPanelComponent, canActivate: [AdminGuard] },
   { path: 'admin/panel/employee-management', component: EmployeeManagementComponent, canActivate: [AdminGuard] },
-
+  { path: 'admin/panel/service-management', component: ServiceManagementComponent, canActivate: [AdminGuard] },
+  { path: 'admin/panel/employee-services', component: EmployeeServiceComponent, canActivate: [AdminGuard] },
 
 ];
 

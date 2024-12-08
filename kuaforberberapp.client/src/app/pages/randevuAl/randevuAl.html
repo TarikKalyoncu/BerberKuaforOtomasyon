@@ -1,11 +1,11 @@
 <div class="container">
   <h3>Select Gender</h3>
-  <button (click)="selectGender('Male')">Male</button>
-  <button (click)="selectGender('Female')">Female</button>
+  <button (click)="selectGender('Erkek')">Erkek</button>
+  <button (click)="selectGender('Kadın')">Kadın</button>
 
   <div *ngIf="services$ | async as services">
     <h3>Select Service</h3>
-    <button *ngFor="let service of services" (click)="selectService(service.id)">
+    <button *ngFor="let service of services" (click)="selectService(service.serviceID)">
       {{ service.name }}
     </button>
   </div>

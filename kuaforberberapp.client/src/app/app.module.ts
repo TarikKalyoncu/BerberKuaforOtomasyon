@@ -25,6 +25,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
+import { ServiceManagementComponent } from './pages/ServiceManagement/ServiceManagement';
+import { ServiceAssignmentComponent } from './pages/ServiceAssignment/ServiceAssignment';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EmployeeServiceComponent } from './pages/EmployeeService/EmployeeService';
+import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +41,10 @@ import { MatListModule } from '@angular/material/list';
     RandevuGoruntuleComponent,
     HomeComponent,
     AdminPanelComponent,
-    EmployeeManagementComponent
+    EmployeeManagementComponent,
+    ServiceManagementComponent,
+    ServiceAssignmentComponent,
+    EmployeeServiceComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +67,9 @@ import { MatListModule } from '@angular/material/list';
     MatIconModule,
     MatInputModule,
     MatSelectModule,
-    MatListModule 
+    MatListModule,
+    MatDialogModule,
+    MatTableModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

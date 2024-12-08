@@ -1,0 +1,88 @@
+/* Tablo genel stil */
+table.mat-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: red;
+}
+
+/* Tablo başlıkları */
+th.mat-header-cell {
+  background-color: #3f51b5;
+  color: #fff;
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Tablo hücreleri */
+td.mat-cell {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #f1f1f1;
+  color: #333;
+}
+
+/* Satır hover efekti */
+tr.mat-row:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+/* Tabloyu ayıran çizgi */
+th.mat-header-cell, td.mat-cell {
+  border-right: 1px solid #f1f1f1;
+}
+
+  /* Sondaki hücreyi hizalamak için son hücreye özel stil */
+  td.mat-cell:last-child, th.mat-header-cell:last-child {
+    border-right: none;
+  }
+
+/* Tablo başlığında ve satırlarda yazı hizalama */
+.mat-header-row, .mat-row {
+  height: 50px;
+}
+
+/* Tabloyu daha iyi hizalamak için */
+.mat-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Satırların altına hafif gölge efekti */
+tr.mat-header-row, tr.mat-row {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Tablo başlığına padding ekleyelim */
+.mat-header-cell {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.header-content mat-icon {
+ padding-top:5px;/* Icon ile metin arasındaki boşluğu ayarlıyoruz */
+}
+
+
+
+
+
+/* Ekran boyutuna göre küçük düzenlemeler */
+@media (max-width: 768px) {
+  table.mat-table {
+    font-size: 12px;
+  }
+
+  th.mat-header-cell, td.mat-cell {
+    padding: 8px 12px;
+  }
+}
+.icon-color {
+  color:darkblue; /* Blue color */
+}

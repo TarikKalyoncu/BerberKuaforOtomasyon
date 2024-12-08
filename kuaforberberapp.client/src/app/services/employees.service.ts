@@ -13,6 +13,14 @@ export interface Employee {
   createdAt?: string;
 }
 
+export interface ServiceEmployee {
+  employeeName: string;
+  serviceName: string;
+  duration: number;
+  price: number;
+  gender: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -56,5 +64,10 @@ export class EmployeeService {
         return throwError(() => new Error(error.message));
       })
     );
+  }
+
+
+  getEmployeeServices(): Observable<any> {
+    return this.http.get<any>(`${environment.baseApiUrl}/api/employee-services`);
   }
 }

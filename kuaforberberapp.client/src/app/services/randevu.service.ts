@@ -1,20 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../env/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RandevuService {
-  private baseUrl = 'http://localhost:4200';
+  private baseUrl = `${environment.baseApiUrl}/api/service`;
 
   constructor(private http: HttpClient) { }
 
   // Method to get services based on gender
-  getHizmetlerByGender(gender: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/services?gender=${gender}`);
+  getHizmetlerByGender(gender: string): Observable<any> {
+    const url = `${this.baseUrl}/${gender}`; // gender'ı URL yoluna ekliyoruz
+    return this.http.get(url);
   }
 
+  // Assuming this.baseUrl is: 'http://localhost:5198'
+  getEmployeesByServiceId(serviceId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/${serviceId}/employees`);
+  }
+
+
+ 
   // Method to get employees by criteria
   getEmployeesByCriteria(gender: string, service: string, date: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/employees`, {

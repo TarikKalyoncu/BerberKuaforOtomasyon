@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { RandevuService } from '../../services/randevu.service';
 import { BehaviorSubject, catchError, Observable, of, switchMap, tap } from 'rxjs';
+import { Service } from '../../services/serviceAssignService';
 
 @Component({
   selector: 'app-randevual',
@@ -17,11 +18,16 @@ export class RandevuAlComponent {
   public employeeSubject = new BehaviorSubject<string | null>(null);
 
   gender$ = this.genderSubject.asObservable();
-  services$: Observable<any[]> = this.gender$.pipe(
+
+
+
+
+  services$: Observable<Service[]> = this.gender$.pipe(
     switchMap((gender) => {
       if (!gender) {
         return of([]);
       }
+      console.log(gender, 2);
       return this.randevuService.getHizmetlerByGender(gender).pipe(
         tap(() => this.toastr.success('Services loaded!')),
         catchError(() => {
@@ -70,6 +76,7 @@ export class RandevuAlComponent {
 
   selectGender(gender: string) {
     this.genderSubject.next(gender);
+    console.log(gender,1);
     this.serviceSubject.next(null);
     this.dateSubject.next(null);
     this.employeeSubject.next(null);
@@ -80,6 +87,21 @@ export class RandevuAlComponent {
     this.serviceSubject.next(service);
     this.dateSubject.next(null);
     this.employeeSubject.next(null);
+
+    console.log(service, 11111);
+
+    this.employees$ = this.randevuService.getEmployeesByServiceId(service).pipe(
+      tap((employees) => {
+        console.log('Employees:', employees); // Log the employees here
+        this.toastr.success('Employees loaded!');
+      }),
+      catchError(() => {
+        this.toastr.error('Error loading employees.');
+        return of([]); // Return an empty array in case of error
+      })
+    );
+
+
     this.toastr.success('Service selected!');
   }
 

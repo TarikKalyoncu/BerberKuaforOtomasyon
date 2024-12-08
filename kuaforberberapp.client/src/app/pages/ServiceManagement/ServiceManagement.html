@@ -1,0 +1,104 @@
+<div class="container">
+  <img src="assets/berber.jpg" alt="Alternate Text" />
+
+
+  <h2>Yeni Hizmet Ekle</h2>
+
+  <!-- Yeni Hizmet Ekle -->
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Hizmet Türü</mat-label>
+      <mat-select [(ngModel)]="newService.name">
+        <mat-option *ngFor="let type of serviceTypes" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Süre (Dakika)</mat-label>
+      <input matInput type="number" [(ngModel)]="newService.duration" placeholder="Süre (dk)" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fiyat (₺)</mat-label>
+      <input matInput type="number" [(ngModel)]="newService.price" placeholder="Fiyat" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Cinsiyet</mat-label>
+      <mat-select [(ngModel)]="newService.gender">
+        <mat-option *ngFor="let type of genders" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="addService()">
+      <mat-icon>add</mat-icon> Ekle
+    </button>
+  </div>
+
+  <!-- Hizmetler Listesi -->
+  <h3 style="padding-top:20px;">
+    <mat-icon>list</mat-icon> Hizmet Listesi
+  </h3>
+  <mat-list>
+    <mat-list-item *ngFor="let service of services">
+      <span matLine>
+        <mat-icon>build</mat-icon> {{ service.name }} - {{ service.price | currency:'TRY':'symbol' }}
+      </span>
+      <button mat-icon-button color="primary" (click)="editService(service)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteService(service.serviceID!)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+
+  <!-- Hizmet Güncelle -->
+  <div *ngIf="editMode">
+    <h3>
+      <mat-icon>edit</mat-icon> Hizmet Güncelle
+    </h3>
+    <mat-form-field appearance="fill">
+      <mat-label>Hizmet Türü</mat-label>
+      <mat-select [(ngModel)]="selectedService!.name">
+        <mat-option *ngFor="let type of serviceTypes" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Süre (Dakika)</mat-label>
+      <input matInput type="number" [(ngModel)]="selectedService!.duration" placeholder="Süre (dk)" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Fiyat (₺)</mat-label>
+      <input matInput type="number" [(ngModel)]="selectedService!.price" placeholder="Fiyat" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Cinsiyet</mat-label>
+      <mat-select [(ngModel)]="selectedService!.gender">
+        <mat-option value="Erkek">Erkek</mat-option>
+        <mat-option value="Kadın">Kadın</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" (click)="updateService()">
+      <mat-icon>update</mat-icon> Güncelle
+    </button>
+  </div>
+
+
+  <button mat-raised-button color="primary" (click)="openAssignServiceDialog()">
+    <mat-icon>assignment</mat-icon> Hizmet Ata
+  </button>
+
+  <!-- Other content here -->
+
+</div>
