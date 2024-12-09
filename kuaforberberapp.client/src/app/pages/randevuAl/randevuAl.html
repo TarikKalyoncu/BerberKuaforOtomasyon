@@ -1,35 +1,70 @@
 <div class="container">
-  <h3>Select Gender</h3>
-  <button (click)="selectGender('Erkek')">Erkek</button>
-  <button (click)="selectGender('Kadın')">Kadın</button>
-
-  <div *ngIf="services$ | async as services">
-    <h3>Select Service</h3>
-    <button *ngFor="let service of services" (click)="selectService(service.serviceID)">
-      {{ service.name }}
+  <h3>
+    <i class="fas fa-venus-mars"></i> Select Gender
+  </h3>
+  <div style="padding-top:5px;" class="button-group">
+    <button (click)="selectGender('Erkek')"
+            [class.selected]="selectedGender === 'Erkek'">
+      Erkek
+    </button>
+    <button (click)="selectGender('Kadın')"
+            [class.selected]="selectedGender === 'Kadın'">
+      Kadın
     </button>
   </div>
 
-  <div *ngIf="serviceSubject.getValue() as service">
-    <h3>Select Date</h3>
-    <input type="date" (change)="selectDate($event)" />
-
+  <div style="padding-top:15px;" *ngIf="services$ | async as services">
+    <h3>
+      <i class="fas fa-cut"></i> Select Service
+    </h3>
+    <div class="button-group">
+      <button *ngFor="let service of services"
+              (click)="selectService(service)"
+              [class.selected]="selectedService === service.name">
+        {{ service.name }}
+      </button>
+    </div>
   </div>
 
-  <div *ngIf="employees$ | async as employees">
-    <h3>Available Employees</h3>
-    <ul>
+  <div style="padding-top:15px;" *ngIf="employees$ | async as employees">
+    <h3>
+      <i class="fas fa-user-tie"></i> Available Employees
+    </h3>
+    <ul class="employee-list">
       <li *ngFor="let employee of employees">
-        <button (click)="selectEmployee(employee.id)">
-          {{ employee.name }} - {{ employee.position }}
+        <button (click)="selectEmployee(employee)"
+                [class.selected]="selectedEmployee === employee.name">
+          {{ employee.name }}
         </button>
       </li>
     </ul>
   </div>
 
-  <div *ngIf="employeeSubject.getValue() as employee">
-    <h3>Selected Employee Price</h3>
-    <p *ngIf="selectedEmployeePrice$ | async as price">Price: {{ price | currency }}</p>
-    <button (click)="createAppointment()">Create Appointment</button>
+  <div style="padding-top:15px;" *ngIf="employeeSubject.getValue() as employee">
+    <h3>
+      <i class="fas fa-calendar-alt"></i> Select Date
+    </h3>
+    <input class="date-picker" type="date" (change)="selectDate($event)" />
+
+    <div *ngIf="dateSubject.getValue()">
+      <h3>
+        <i class="fas fa-clock"></i> Select Time
+      </h3>
+      <select class="time-picker" (change)="selectTime($event)">
+        <option *ngFor="let time of availableTimeSlots" [value]="time">{{ time }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="padding-top:15px;" *ngIf="employeeSubject.getValue() as employee">
+    <h3>
+      <i class="fas fa-tags"></i> Selected Employee Price
+    </h3>
+    <p *ngIf="selectedEmployeePrice$ | async as price" class="price">
+      Price: {{ price | currency }}
+    </p>
+    <button class="create-appointment" (click)="createAppointment()">
+      <i class="fas fa-calendar-check"></i> Create Appointment
+    </button>
   </div>
 </div>

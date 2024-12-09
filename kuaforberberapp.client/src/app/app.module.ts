@@ -30,6 +30,7 @@ import { ServiceAssignmentComponent } from './pages/ServiceAssignment/ServiceAss
 import { MatDialogModule } from '@angular/material/dialog';
 import { EmployeeServiceComponent } from './pages/EmployeeService/EmployeeService';
 import { MatTableModule } from '@angular/material/table';
+import { AppointmentManagementComponent } from './pages/appointmentManagement/appointmentManagement';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { MatTableModule } from '@angular/material/table';
     EmployeeManagementComponent,
     ServiceManagementComponent,
     ServiceAssignmentComponent,
-    EmployeeServiceComponent
+    EmployeeServiceComponent,
+    AppointmentManagementComponent
   ],
   imports: [
     BrowserModule,

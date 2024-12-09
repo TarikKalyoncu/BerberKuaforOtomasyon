@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../../services/employees.service';
 import { Service, ServiceAssignService, ServiceType, ServiceGender } from '../../services/serviceAssignService';
 import { ToastrService } from 'ngx-toastr';
-import { ServiceAssignmentComponent } from '../ServiceAssignment/ServiceAssignment';
+
 import { MatDialog } from '@angular/material/dialog';
+import { ServiceAssignmentComponent } from '../ServiceAssignment/ServiceAssignment';
 
 @Component({
   selector: 'app-servicemanagement',

@@ -12,6 +12,7 @@ import { AdminPanelComponent } from './pages/adminPanel/adminPanel';
 import { EmployeeManagementComponent } from './pages/employeeManagement/employeeManagement';
 import { ServiceManagementComponent } from './pages/ServiceManagement/ServiceManagement';
 import { EmployeeServiceComponent } from './pages/EmployeeService/EmployeeService';
+import { AppointmentManagementComponent } from './pages/appointmentManagement/appointmentManagement';
 
 
 const routes: Routes = [
@@ -25,6 +26,8 @@ const routes: Routes = [
   { path: 'admin/panel/employee-management', component: EmployeeManagementComponent, canActivate: [AdminGuard] },
   { path: 'admin/panel/service-management', component: ServiceManagementComponent, canActivate: [AdminGuard] },
   { path: 'admin/panel/employee-services', component: EmployeeServiceComponent, canActivate: [AdminGuard] },
+  { path: 'admin/panel/appointment-management', component: AppointmentManagementComponent, canActivate: [AdminGuard] },
+   
 
 ];
 
