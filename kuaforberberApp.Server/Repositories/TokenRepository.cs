@@ -37,7 +37,7 @@ namespace kuaforberberApp.Server.Repositories
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(5), // Set token expiration
+                expires: DateTime.Now.AddMinutes(500), // Set token expiration
                 signingCredentials: credentials
             );
 
