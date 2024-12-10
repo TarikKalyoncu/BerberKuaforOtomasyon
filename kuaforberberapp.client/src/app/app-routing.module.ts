@@ -13,6 +13,7 @@ import { EmployeeManagementComponent } from './pages/employeeManagement/employee
 import { ServiceManagementComponent } from './pages/ServiceManagement/ServiceManagement';
 import { EmployeeServiceComponent } from './pages/EmployeeService/EmployeeService';
 import { AppointmentManagementComponent } from './pages/appointmentManagement/appointmentManagement';
+import { HairAdviceAIComponent } from './pages/hairAdviceAI/hairAdviceAI';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'admin/panel/service-management', component: ServiceManagementComponent, canActivate: [AdminGuard] },
   { path: 'admin/panel/employee-services', component: EmployeeServiceComponent, canActivate: [AdminGuard] },
   { path: 'admin/panel/appointment-management', component: AppointmentManagementComponent, canActivate: [AdminGuard] },
+  { path: 'hair-advice', component: HairAdviceAIComponent }, // Yeni rota
    
 
 ];
