@@ -31,7 +31,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EmployeeServiceComponent } from './pages/EmployeeService/EmployeeService';
 import { MatTableModule } from '@angular/material/table';
 import { AppointmentManagementComponent } from './pages/appointmentManagement/appointmentManagement';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatToolbarModule } from '@angular/material/toolbar';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,7 +74,13 @@ import { AppointmentManagementComponent } from './pages/appointmentManagement/ap
     MatSelectModule,
     MatListModule,
     MatDialogModule,
-    MatTableModule
+    MatTableModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

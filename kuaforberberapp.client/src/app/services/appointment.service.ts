@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Employee } from './employees.service';
 import { Service } from './serviceAssignService';
 import { UserService } from './user.service';
+import { User } from '../models/user.model';
 
 
 export interface Appointment {
@@ -21,9 +22,25 @@ export interface Appointment {
   ServiceID: number;         // Hizmet ID'si    // Hizmet adı
 }
 
+export interface AllAppointment {
+  appointmentID: number;
+  appointmentDate: string; // ISO formatta tarih
+  startTime: string; // Saat formatında
+  endTime: string; // Saat formatında
+  status: AppointmentStatus; // Durum bilgisi için
+  totalPrice: number;
+  createdAt: string; // ISO formatta tarih
+  userID: number;
+  user: User;
+  employeeID: number;
+  employee: Employee;
+  serviceID: number;
+  service: Service;
+}
+
 export enum AppointmentStatus {
   Pending = 'Pending',
-  Completed = 'Completed',
+  Completed = 'Confirmed',
   Cancelled = 'Cancelled'
 }
 
@@ -74,6 +91,35 @@ export class AppointmentService {
 
         console.log(appointmentData,99)
         return this.http.post(`${this.baseUrl}/appointments`, appointmentData, { headers: { 'Content-Type': 'application/json' } });
+      })
+    );
+
+  }
+
+  getAllAppointments(): Observable<AllAppointment[]> {
+    return this.http.get<AllAppointment[]>(`${this.baseUrl}/all`).pipe(
+      catchError((error) => {
+        this.toastr.error('Error fetching appointments.', 'Error');
+        return throwError(() => error);
+      })
+    );
+  }
+
+  updateAppointment(appointment: AllAppointment): Observable<any> {
+    console.log(appointment,"appointment")
+    return this.http.put(`${this.baseUrl}/${appointment.appointmentID}`, appointment.status).pipe(
+      catchError((error) => {
+        this.toastr.error('Error updating appointment.', 'Error');
+        return throwError(() => error);
+      })
+    );
+  }
+
+  deleteAppointment(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`).pipe(
+      catchError((error) => {
+        this.toastr.error('Error deleting appointment.', 'Error');
+        return throwError(() => error);
       })
     );
   }

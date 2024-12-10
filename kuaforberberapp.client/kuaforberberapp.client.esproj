@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\pages\adminPanel\" />
+    <Folder Include="src\app\pages\appointmentManagement\" />
     <Folder Include="src\app\pages\ServiceManagement\" />
     <Folder Include="src\app\pages\randevuGoruntule\" />
     <Folder Include="src\app\pages\randevuAl\" />
