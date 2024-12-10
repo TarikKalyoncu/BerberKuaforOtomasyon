@@ -20,16 +20,19 @@ export class AdminPanelComponent implements OnInit {
     { label: 'Tüm Hizmetler', action: 'employee-services', icon: 'event' },
     { label: 'Randevu İşlemleri', action: 'appointment-management', icon: 'edit_calendar' },
     { label: 'Ayarlar', action: 'settings', icon: 'settings' },
-    { label: 'Çıkış', action: 'logout', icon: 'logout' },
+    { label: 'Çıkış', action: '', icon: 'logout' },
   ];
 
 
 
   onButtonClick(action: string): void {
-    this.router.navigate([`admin/panel/${action}`]);
-    // Burada butonun işlevselliğini yönlendirebilirsiniz.
+    if (action === '') {
+      this.router.navigate(['/']); // Navigate to home page (http://localhost:4200/)
+    } else {
+      // Handle other actions (navigation to other components/pages)
+      this.router.navigate([`admin/panel/${action}`]);
+    }
   }
-
 
 
 

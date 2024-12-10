@@ -1,11 +1,31 @@
-<!DOCTYPE html>
+<div *ngIf="appointments.length > 0; else noAppointments">
+  <h2>Randevularınız</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Tarih</th>
+        <th>Başlangıç Zamanı</th>
+        <th>Bitiş Zamanı</th>
+        <th>Hizmet</th>
+        <th>Çalışan</th>
+        <th>Durum</th>
+        <th>Fiyat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let appointment of appointments">
+        <td>{{ appointment.appointmentDate | date: 'shortDate' }}</td>
+        <td>{{ appointment.startTime }}</td>
+        <td>{{ appointment.endTime }}</td>
+        <td>{{ appointment.service?.name }}</td>
+        <td>{{ appointment.employee?.name }}</td>
+        <td>{{ appointment.status }}</td>
+        <td>{{ appointment.totalPrice | currency }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+<ng-template #noAppointments>
+  <p>Henüz bir randevunuz yok.</p>
+</ng-template>

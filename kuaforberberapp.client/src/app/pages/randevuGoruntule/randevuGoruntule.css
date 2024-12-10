@@ -1,0 +1,76 @@
+/* General styling */
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+  background-color: #f4f4f4;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+td {
+  color: #555;
+}
+
+  td .currency {
+    color: #009688;
+  }
+
+tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Styling for no appointments message */
+ng-template #noAppointments {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+  padding: 20px;
+  font-style: italic;
+}
+
+p {
+  margin: 0;
+}
+
+/* Responsive design for small screens */
+@media (max-width: 768px) {
+  table {
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+}

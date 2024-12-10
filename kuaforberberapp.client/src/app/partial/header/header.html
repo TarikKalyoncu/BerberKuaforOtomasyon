@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
   <div class="container d-flex justify-content-between">
     <a [routerLink]="['']">
-      <img src="" [routerLink]="['']" alt="" height="45px" width="200px">
+      <img src="../../../assets/images/barbershop-logo-free-vector.jpg" [routerLink]="['']" alt="" height="55px" width="200px">
     </a>
 
     <button class="navbar-toggler"
@@ -33,21 +33,18 @@
 
       <ul class="navbar-nav mr-auto d-flex flex-row ">
 
-        <li class="nav-item" *ngIf="isLoggedIn" style="display: flex">
-          <a [routerLink]="getUserProfileLink()">
-            <img src="userPhoto" alt="User Photo" style="object-fit: cover" />
-          </a>
-
-          <a class="nav-link" [routerLink]="getUserProfileLink()">Profil</a>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['']">Ana Sayfa</a>
         </li>
+
 
         <li class="nav-item active" *ngIf="isLoggedIn && isAdmin">
           <a class="nav-link" [routerLink]="['/admin','panel']">Panel</a>
         </li>
-        <li class="nav-item active" >
+        <li class="nav-item active">
           <a class="nav-link" [routerLink]="['/randevu', 'al']">Randevu Al</a>
         </li>
-        <li class="nav-item active" >
+        <li class="nav-item active">
           <a class="nav-link" [routerLink]="['/randevu', 'goruntule']">Randevu Görüntüle</a>
         </li>
 
