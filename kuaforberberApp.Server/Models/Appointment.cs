@@ -1,4 +1,5 @@
 ﻿using KuaforBerberOtomasyon.Enums;
+using System.Text.Json.Serialization;
 
 namespace KuaforBerberOtomasyon.Models
 {
@@ -6,9 +7,10 @@ namespace KuaforBerberOtomasyon.Models
     {
         public int AppointmentID { get; set; }
         public DateTime AppointmentDate { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan EndTime { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public AppointmentStatus Status { get; set; } // Enum kullanılıyor
         public decimal TotalPrice { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;

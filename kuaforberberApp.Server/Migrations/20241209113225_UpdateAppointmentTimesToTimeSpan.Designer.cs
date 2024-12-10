@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace kuaforberberApp.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241209113225_UpdateAppointmentTimesToTimeSpan")]
+    partial class UpdateAppointmentTimesToTimeSpan
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,16 +64,14 @@ namespace kuaforberberApp.Server.Migrations
                     b.Property<int>("EmployeeID")
                         .HasColumnType("integer");
 
-                    b.Property<string>("EndTime")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("interval");
 
                     b.Property<int>("ServiceID")
                         .HasColumnType("integer");
 
-                    b.Property<string>("StartTime")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("interval");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");

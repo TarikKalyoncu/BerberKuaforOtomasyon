@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("kuaforberberApp.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d05a17c878926b537308bd501b8020c79c65e825")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+afd17ef14b02c15f0e60d532a879362da7d8c569")]
 [assembly: System.Reflection.AssemblyProductAttribute("kuaforberberApp.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("kuaforberberApp.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
