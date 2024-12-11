@@ -26,23 +26,28 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean | undefined;
   
   constructor(private userService: UserService, private http: HttpClient, private dialog: MatDialog, private router: Router) {
-   
-  }
-
-  ngOnInit() {
-    this.userId = this.getUserIdFromToken();
     this.userService.isTokenInStorage().subscribe((isLoggedIn: boolean) => {
       this.isLoggedIn = isLoggedIn;
 
     });
-     this.userService.isAdmin.subscribe(isAdmin => this.isAdmin = isAdmin);
-
-   /*this.getUserPhoto(this.userId).subscribe((photo) => {
-      this.userPhoto = photo
-      console.log(7, this.userPhoto)
-    });*/ 
-
   }
+
+  ngOnInit() {
+    this.userId = this.getUserIdFromToken();
+
+    // Kullanıcının giriş durumunu dinleyin
+    this.userService.isUserLoggedIn.subscribe((isLoggedIn: boolean) => {
+      this.isLoggedIn = isLoggedIn;
+
+      if (isLoggedIn) {
+        this.userId = this.getUserIdFromToken(); // Giriş yapıldığında kullanıcı ID'sini tekrar alın
+      }
+    });
+
+    // Admin kontrolü
+    this.userService.isAdmin.subscribe((isAdmin) => (this.isAdmin = isAdmin));
+  }
+
 
 
   getUserProfileLink(): string {

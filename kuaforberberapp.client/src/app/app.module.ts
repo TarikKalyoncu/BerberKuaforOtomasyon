@@ -35,6 +35,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HairAdviceAIComponent } from './pages/hairAdviceAI/hairAdviceAI';
+import { NgxSpinnerModule } from "ngx-spinner";
  
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { HairAdviceAIComponent } from './pages/hairAdviceAI/hairAdviceAI';
     MatPaginatorModule,
     MatSortModule,
     MatButtonModule,
+    NgxSpinnerModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
