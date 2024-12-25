@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'admin/panel/service-management', component: ServiceManagementComponent, canActivate: [AdminGuard] },
   { path: 'admin/panel/employee-services', component: EmployeeServiceComponent, canActivate: [AdminGuard] },
   { path: 'admin/panel/appointment-management', component: AppointmentManagementComponent, canActivate: [AdminGuard] },
-  { path: 'hair-advice', component: HairAdviceAIComponent }, // Yeni rota
+  { path: 'hair-advice', component: HairAdviceAIComponent ,canActivate: [AuthGuard]}, // Yeni rota
    
 
 ];
