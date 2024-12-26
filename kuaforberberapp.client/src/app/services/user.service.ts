@@ -68,13 +68,7 @@ export class UserService {
     return this.user$.asObservable();
   }
 
-  getDefaultFullImagePath(): string {
-    return 'http://localhost:3000/api/feed/image/blank-profile-picture.png';
-  }
 
-  getFullImagePath(id: string): string {
-    return 'http://localhost:3000/user/' + id;
-  }
 
   get userStream(): Observable<User> {
     return this.user$.asObservable();
